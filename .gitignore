@@ -1,0 +1,12 @@
+# Ingnore Folders
+__pycache__
+env/
+reports/
+node_modules/
+kyleinprogress/media/
+
+# Ignore Files
+*.pyc
+db.sqlite3
+kyleinprogress/static/css/*.css
+kyleinprogress/static/css/*.map
