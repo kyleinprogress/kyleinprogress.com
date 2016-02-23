@@ -1,0 +1,19 @@
+{% extends "_layout_single_column.html" %}
+
+<!-- The Page Title-->
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+<!-- Load Main Page Content -->
+{% block main_content %}
+    <div class="home-page-posts animated fadeIn ">
+        {% include "blog/post_full.html" %}
+    </div>
+{% endblock %}
+
+{% if object.header_image %}
+    {% block extra-javascript %}
+        <script>$(".hero-image").backstretch("{{ object.header_image.url }}");</script>
+    {% endblock %}
+{% endif %}

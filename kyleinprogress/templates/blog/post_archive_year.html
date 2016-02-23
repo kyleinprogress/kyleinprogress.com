@@ -1,0 +1,26 @@
+{% extends "_layout_left_sidebar.html" %}
+
+<!-- The Page Title-->
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+<!-- Load Main Page Content -->
+{% block main_content %}
+    
+    <div class="sub-nav">
+        <h1>All Articles for {{ year|date:"Y" }}</h1>
+    </div>
+
+    <div class="home-page-posts">
+        {% include "blog/post_summary.html" %}
+    </div>
+
+    <div class="home-page-categories hide">
+        <div class="category row">
+            <section>
+                {% include "blog/categories_list.html" %}
+            </section>
+        </div>
+    </div>
+{% endblock %}
