@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import include, patterns, url
 from django.conf.urls.static import static
 
 from django.contrib import admin
@@ -9,17 +9,16 @@ from django.contrib.flatpages import views
 from django.views.static import serve
 
 
+urlpatterns = []
+
+
+
 urlpatterns = [
     # Blog URLs
     url(r'', include('blog.urls')),
 
     # Admin URLS
     url(r'^admin/', admin.site.urls),
-
-    # Flatpage URLS
-    url(r'^(?P<url>.*/)$', views.flatpage),
-    # url(r'^about/$', views.flatpage, {'url': '/about/'}, name='about'),
-
 ]
 
 if settings.DEBUG:

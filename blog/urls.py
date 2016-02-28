@@ -17,6 +17,7 @@ sitemaps = {
 urlpatterns = [
     # Index
     url(r'^$', views.index, name="index"),
+    #url(r'^$', PostIndexView.as_view(template_name="blog/index.html"), name="index"),
 
     # Individual posts
     url(r'^archive/(?P<published_date__year>\d{4})/(?P<published_date__month>\d{2})/(?P<slug>[a-zA-Z0-9-]+)/?$', DetailView.as_view(
@@ -24,8 +25,8 @@ urlpatterns = [
         )),
 
     # Archive Views
-    url(r'^archive/(?P<year>[0-9]{4})/$',PostYearArchiveView.as_view(),name="article_year_archive"),
-    url(r'^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',PostMonthArchiveView.as_view(month_format='%m'),name="archive_month_numeric"),
+    url(r'^archive/(?P<year>[0-9]{4})/$', PostYearArchiveView.as_view(), name="article_year_archive"),
+    url(r'^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$', PostMonthArchiveView.as_view(month_format='%m'), name="archive_month_numeric"),
 
     # Categories
     url(r'^category/(?P<slug>[a-zA-Z0-9-]+)/?$', CategoryListView.as_view(

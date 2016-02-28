@@ -7,9 +7,7 @@
 
 <!-- Load Main Page Content -->
 {% block main_content %}
-    <div class="home-page-posts animated fadeIn ">
         {% include "blog/post_full.html" %}
-    </div>
 {% endblock %}
 
 {% if object.header_image %}
@@ -17,3 +15,7 @@
         <script>$(".hero-image").backstretch("{{ object.header_image.url }}");</script>
     {% endblock %}
 {% endif %}
+
+{% block footer %}
+    {% include "blog/post_footer.html" %}
+{% endblock footer %}

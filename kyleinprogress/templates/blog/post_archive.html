@@ -1,0 +1,21 @@
+{% load custom_markdown %}
+{% load static from staticfiles %}
+
+{% for post in lastest %}
+    <article class="post {% if not post.is_published %}unpublished{% endif %}">
+        <div class="post-preview col-xs-10 no-gutter">
+            <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h1>
+            <p>{% if object.summary %}
+                {{ object.summary|custom_markdown }}
+            {% endif %}
+            </p>
+            <p class="meta">
+                {{ object.author.get_full_name }} in <a href="{{ object.category.get_absolute_url }}">{{ object.category.name }}</a> <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ object.published_date|date:"DATE_FORMAT" }}
+            </p>
+        </div>
+
+        <!-- <div class=" col-xs-2  no-gutter">
+            <img src="{% static "img/profile-1.jpg" %}" class="user-icon" alt="user-image">
+        </div> -->
+    </article>
+{% endfor %}

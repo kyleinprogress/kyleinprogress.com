@@ -2,6 +2,7 @@
 
 import json
 import os
+from pathlib import Path
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -14,13 +15,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd2t761861lhrl4i&0@zc##h=!vb01if)g)@b!9gvvhjw5170)e'
 
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 # Django default applications
-DEFAULT_APPS = (
+DEFAULT_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,25 +31,23 @@ DEFAULT_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.syndication',
 
-)
+]
 
 # Third party apps installed from other people
-THIRD_PARTY_APPS = (
+THIRD_PARTY_APPS = [
     'markdown2',
     'copyright',
-    'django_jenkins',
-    'debug_toolbar',
-    'el_pagination',
-)
+]
 
 # Apps that are developed locally (home built)
-LOCAL_APPS = (
+LOCAL_APPS = [
     'blog',
-)
+]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +56,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-)
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+]
 
 ROOT_URLCONF = 'kyleinprogress.urls'
 
@@ -85,10 +82,7 @@ TEMPLATES = [
     },
 ]
 
-JENKINS_TASKS = (
-    'django_jenkins.tasks.run_pylint',
-)
-PROJECT_APPS = ['blog']
+
 
 WSGI_APPLICATION = 'kyleinprogress.wsgi.application'
 
@@ -134,5 +128,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Django Copyright
 COPY_START_YEAR = 2016
-
-EL_PAGINATION_PER_PAGE = 5

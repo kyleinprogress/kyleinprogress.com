@@ -2,12 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils.encoding import smart_text
 from django.utils.safestring import mark_safe
-from django.views.generic import ListView, YearArchiveView, MonthArchiveView
+from django.views.generic import ListView, ArchiveIndexView, YearArchiveView, MonthArchiveView
 
 from .models import Category, Post, Tag
 import markdown2
 
-# Create your views here.
 def index(request):
     if request.user.is_staff:
         post_list = Post.objects.all().order_by('-published_date')

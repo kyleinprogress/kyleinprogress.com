@@ -1,31 +1,26 @@
 {% load custom_markdown %}
 {% load static from staticfiles %}
-{% load el_pagination_tags %}
 
 {% if post_list %}
-    {% paginate post_list %}
-        {% for post in post_list %}
-        <article class="post {% if not post.is_published %}unpublished{% endif %}">
-            <div class="post-preview col-xs-10 no-gutter">
-                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
-                <p>{% if post.summary %}
-                    {{ post.summary|custom_markdown }}
-                {% endif %}
-                </p>
-                <p class="meta">
-                    {{ post.author.get_full_name }} in <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a> <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ post.published_date|date:"DATE_FORMAT" }}
-                </p>
-            </div>
+    {% for post in post_list %}
+    <article class="post {% if not post.is_published %}unpublished{% endif %}">
+        <div class="post-preview col-xs-10 no-gutter">
+            <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+            <p>{% if post.summary %}
+                {{ post.summary|custom_markdown }}
+            {% endif %}
+            </p>
+            <p class="meta">
+                {{ post.author.get_full_name }} in <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a> <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ post.published_date|date:"DATE_FORMAT" }}
+            </p>
+        </div>
 
-            <!-- <div class=" col-xs-2  no-gutter">
-                <img src="{% static "img/profile-1.jpg" %}" class="user-icon" alt="user-image">
-            </div> -->
-        </article>
-
-        {% endfor %}
-    {% show_pages %}
+        <!-- <div class=" col-xs-2  no-gutter">
+            <img src="{% static "img/profile-1.jpg" %}" class="user-icon" alt="user-image">
+        </div> -->
+    </article>
+    {% endfor %}
 
 {% else %}
-<p>No posts found</p>
-
+    <p>No posts found</p>
 {% endif %}
