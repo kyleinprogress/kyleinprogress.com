@@ -4,18 +4,25 @@ import json
 import os
 from pathlib import Path
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# File Paths
+PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
+BASE_DIR = PROJECT_PACKAGE.parent
 
+# Import Config.json
+SECRETS = json.load(BASE_DIR.joinpath('config.json').open())
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+SECRET_KEY = str(SECRETS['secret_key'])
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'd2t761861lhrl4i&0@zc##h=!vb01if)g)@b!9gvvhjw5170)e'
+# Apps that are developed locally (home built)
+LOCAL_APPS = [
+    'blog',
+]
 
-
-# Application definition
+# Third party apps installed from other people
+THIRD_PARTY_APPS = [
+    'markdown2',
+    'copyright',
+]
 
 # Django default applications
 DEFAULT_APPS = [
@@ -33,18 +40,7 @@ DEFAULT_APPS = [
 
 ]
 
-# Third party apps installed from other people
-THIRD_PARTY_APPS = [
-    'markdown2',
-    'copyright',
-]
-
-# Apps that are developed locally (home built)
-LOCAL_APPS = [
-    'blog',
-]
-
-INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS + DEFAULT_APPS
 
 MIDDLEWARE_CLASSES = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -66,13 +62,12 @@ SITE_ID = 3
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [str(PROJECT_PACKAGE.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.core.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
@@ -85,21 +80,6 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'kyleinprogress.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_dev_db',
-        'USER': 'vagrant',
-        'HOST': 'localhost',
-        'PASSWORD': 'vagrant',
-    }
-}
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -118,12 +98,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATICFILES_DIRS = [str(PROJECT_PACKAGE.joinpath('static'))]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 
 
 # Django Copyright

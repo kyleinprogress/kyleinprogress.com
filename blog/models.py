@@ -11,24 +11,6 @@ from django.contrib.sites.models import Site
 # Helper Functions
 # --------------------------------
 
-def createLightBoxLinks(markdownText, images):
-    counter = 1
-    image_link = ""
-
-    for image in images:
-        image_url = image.image.url
-        image_caption = image.comment
-        image_ref = '![%s][]' % (image)
-        image_lb_link = '<a href="%s" data-lightbox="image-%s" data-title="%s">![%s][]</a>' % (image_url, counter, image_caption, image)
-        markdownText = str.replace(markdownText, image_ref, image_lb_link)
-        counter = counter + 1
-
-        image_link = '%s\n[%s]: %s "%s"' % (image_link, image, image_url, image_caption)
-
-    md = "%s\n%s" % (markdownText, image_link)
-
-    return md
-
 def insertImageRefLinks(markdownText, images):
     image_ref = ""
 
@@ -58,11 +40,6 @@ class Category(models.Model):
     slug = models.SlugField(max_length=40, unique=True)
     accent_image = models.ImageField(upload_to='categories')
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(unicode(self.name))
-        super(Category, self).save(*args, **kwargs)
-
     def get_absolute_url(self):
         return "/category/%s/" % (self.slug)
 
@@ -71,23 +48,6 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'categories'
-
-# -- Tags --
-class Tag(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    slug = models.SlugField(max_length=40, unique=True, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(unicode(self.name))
-        super(Tag, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return "/tag/%s/" % (self.slug)
-
-    def __str__(self):
-        return self.name
 
 # -- Images --
 class Image(models.Model):
@@ -115,7 +75,12 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     summary = models.TextField(blank=True, null=True)
-    text = models.TextField()
+    text = models.TextField(
+        help_text = (
+            "Use the following notation to attach a picture. ![PictureName][] "
+            "Make sure the picture name matches a value in the \"Chosen Images\" below."
+        )
+    )
     created_date = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(
         help_text= (
@@ -137,7 +102,6 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     site = models.ForeignKey('sites.Site')
     category = models.ForeignKey(Category)
-    tags = models.ManyToManyField(Tag, blank=True)
     header_image = models.ImageField(upload_to='%Y/%m/%d')
     images = models.ManyToManyField(Image, blank=True)
 
@@ -154,10 +118,10 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return "/archive/%s/%s/%s/" % (self.published_date.strftime("%Y"), self.published_date.strftime("%m"), self.slug)
+        return "/archives/%s/%s/%s/" % (self.published_date.strftime("%Y"), self.published_date.strftime("%m"), self.slug)
 
-    def textWithLightboxLinks(self):
-        return createLightBoxLinks(self.text, self.images.all())
+    def get_post_year(self):
+        return self.published_date.strftime("%Y")
 
     def textWithImageLinks(self):
         return insertImageRefLinks(self.text, self.images.all())

@@ -31,10 +31,13 @@
 </header>
 
 <main class="container">
-    <div class="row">
+    <div class="row single-post">
         <div class="col-xs-12 single-content">
             {% block main_content %}{% endblock %}
         </div><!-- main content -->
+    </div>
+    <div class="row single-post comments">
+        {% block post_comments %}{% endblock %}
     </div>
 </main>
 

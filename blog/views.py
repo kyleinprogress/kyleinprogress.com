@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.utils import timezone
 from django.utils.encoding import smart_text
 from django.utils.safestring import mark_safe
-from django.views.generic import ListView, ArchiveIndexView, YearArchiveView, MonthArchiveView
+from django.views.generic import DetailView, ListView, ArchiveIndexView, YearArchiveView, MonthArchiveView, TemplateView
 
-from .models import Category, Post, Tag
+from .models import Category, Post
 import markdown2
 
 def index(request):
@@ -14,19 +15,36 @@ def index(request):
         post_list = Post.objects.published().order_by('-published_date')
     all_categories = Category.objects.all()
     context = {'post_list': post_list, 'all_categories': all_categories}
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/_main.html', context)
 
-class PostYearArchiveView(YearArchiveView):
-    queryset = Post.objects.exclude(published_date__isnull=True).order_by('-published_date')
-    date_field = "published_date"
-    make_object_list = True
 
-class PostMonthArchiveView(MonthArchiveView):
-    queryset = Post.objects.all()
-    date_field = "published_date"
+class PostViewMixin(object):
+    date_field = 'published_date'
+    paginate_by = 10
+
+    def get_allow_future(self):
+        return self.request.user.is_staff
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Post.objects.all()
+        else:
+            return Post.objects.published()
+
+class PostAllView(PostViewMixin, ArchiveIndexView):
+    pass
+
+class PostYearArchiveView(PostViewMixin, YearArchiveView):
     make_object_list = True
+    allow_empty = True
+
+class PostMonthArchiveView(PostViewMixin, MonthArchiveView):
+    make_object_list = True
+    allow_empty = True
 
 class CategoryListView(ListView):
+    template_name = 'blog/category_list.html'
+
     def get_queryset(self):
         slug = self.kwargs['slug']
         try:
@@ -37,11 +55,11 @@ class CategoryListView(ListView):
             post_list = Post.objects.none()
             return post_list
 
-class TagListView(ListView):
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
         slug = self.kwargs['slug']
+        context = super(CategoryListView, self).get_context_data(**kwargs)
         try:
-            tag = Tag.objects.get(slug=slug)
-            return tag.post_set.all()
-        except Tag.DoesNotExist:
-            return Post.objects.none()
+            context['category'] = Category.objects.get(slug=slug)
+        except Category.DoesNotExist:
+            context['category'] = Category.objects.none()
+        return context

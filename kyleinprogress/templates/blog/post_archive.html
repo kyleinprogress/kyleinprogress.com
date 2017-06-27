@@ -1,21 +1,19 @@
-{% load custom_markdown %}
-{% load static from staticfiles %}
+{% extends "_layout_left_sidebar.html" %}
 
-{% for post in lastest %}
-    <article class="post {% if not post.is_published %}unpublished{% endif %}">
-        <div class="post-preview col-xs-10 no-gutter">
-            <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h1>
-            <p>{% if object.summary %}
-                {{ object.summary|custom_markdown }}
-            {% endif %}
-            </p>
-            <p class="meta">
-                {{ object.author.get_full_name }} in <a href="{{ object.category.get_absolute_url }}">{{ object.category.name }}</a> <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ object.published_date|date:"DATE_FORMAT" }}
-            </p>
-        </div>
+<!-- The Page Title-->
+{% block title %}
+{{ block.super }}
+{% endblock %}
 
-        <!-- <div class=" col-xs-2  no-gutter">
-            <img src="{% static "img/profile-1.jpg" %}" class="user-icon" alt="user-image">
-        </div> -->
-    </article>
-{% endfor %}
+<!-- Load Main Page Content -->
+{% block main_content %}
+
+    <div class="sub-nav">
+        <h1>All Posts</h1>
+    </div>
+
+    <div class="home-page-posts">
+        {% include "blog/post_complete_list.html" %}
+    </div>
+    {% include "includes/footer.html" %}
+{% endblock %}

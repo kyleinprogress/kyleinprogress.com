@@ -1,0 +1,18 @@
+{% extends "_layout_left_sidebar_category.html" %}
+
+<!-- The Page Title-->
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+<!-- Load Main Page Content -->
+{% block main_content %}
+    <div class="sub-nav">
+        <a href="#" class="select-posts active">Posts</a>
+    </div>
+
+    <div class="home-page-posts animated fadeIn">
+        {% include "blog/post_category_list.html" %}
+    </div>
+    {% include "includes/footer.html" %}
+{% endblock %}

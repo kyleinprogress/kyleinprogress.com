@@ -1,0 +1,17 @@
+{% load custom_markdown %}
+{% load static from staticfiles %}
+
+{% for post in latest %}
+<article class="post compressed {% if not post.is_published %}unpublished{% endif %}">
+    <div class="post-preview col-xs-12">
+        <p>{{ post.published_date|date:"d M Y" }} - <a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+    </div>
+</article>
+{% empty %}
+<article>
+    <div class="post-preview col-xs-12 no-gutter">
+        <br /><p>Unfortunately, we could not find any posts.</p>
+    </div>
+</article>
+
+{% endfor %}

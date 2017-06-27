@@ -1,0 +1,40 @@
+<!-- Load Base HTML Template -->
+{% extends "_base.html" %}
+
+{% load copyrighttags %}
+
+{% block content %}
+<main class="container left-container">
+    <div class="row">
+
+        <!-- Navigation Menu -->
+        {% include "includes/navigation.html" %}
+
+        <!-- Begin Sidebar -->
+        {% if category.accent_image.url %}
+            <section class="sidebar col-md-5 col-sm-12" style="background-image: url({{ category.accent_image.url }})">
+        {% else %}
+            <section class="sidebar col-md-5 col-sm-12" style="background-image: url(/static/img/wing-picture.jpg)">
+        {% endif %}
+
+            <span class="menu-trigger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </span>
+
+            <div class="site-info">
+                <div class="primary-info">
+                    <h1>{{ category.name }}</h1>
+                    <p>{{ category.description}}</p>
+                </div>
+            </div>
+        </section><!-- End Sidebar -->
+
+        <section class="col-md-7 col-sm-12 col-md-offset-5 main-content">
+            {% block main_content %}{% endblock %}
+        </section><!-- main content -->
+
+    </div>
+</main>
+{% endblock content %}

@@ -11,17 +11,13 @@ class LatestPosts(Feed):
     link = "/"
 
     def items(self):
-        # return Post.objects.order_by('-published_date')
         return Post.objects.exclude(published_date__isnull=True).order_by('-published_date')
 
     def item_title(self, item):
         return item.title
 
-    def item_link(self, item):
-        return item.get_absolute_url()
-
     def item_description(self, item):
-        extras = ["fenced-code-blocks"]
-        content = mark_safe(markdown2.markdown(force_unicode(item.text),
+        extras = ["fenced-code-blocks", "footnotes"]
+        content = mark_safe(markdown2.markdown(smart_text(item.text,encoding='utf-8'),
                                                extras = extras))
         return content
