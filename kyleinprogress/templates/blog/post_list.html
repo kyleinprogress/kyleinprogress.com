@@ -1,0 +1,13 @@
+{% extends "_layout_left_sidebar.html" %}
+
+<!-- The Page Title-->
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+<!-- Load Main Page Content -->
+{% block main_content %}
+    <div class="home-page-posts">
+        {% include "blog/post_complete_list.html" %}
+    </div>
+{% endblock %}

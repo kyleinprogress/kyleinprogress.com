@@ -1,0 +1,10 @@
+{% load static from staticfiles %}
+
+{% if all_categories %}
+    {% for category in all_categories %}
+    <div class="category-preview col-xs-6 col-sm-4 ">
+        <h2>{{category.name}}</h2>
+        <a href="{{ category.get_absolute_url }}"><img src="{{ category.accent_image.url }}" alt="category-image"></a>
+    </div>
+    {% endfor %}
+{% endif %}

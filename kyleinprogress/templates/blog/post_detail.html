@@ -1,0 +1,29 @@
+{% extends "_layout_single_column.html" %}
+{% load custom_markdown %}
+{% load static %}
+
+<!-- The Page Title-->
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />
+{% endblock stylesheets %}
+
+<!-- Load Main Page Content -->
+{% block main_content %}
+    <h1>{{ object.title }}</h1>
+    {{ object.textWithImageLinks|custom_markdown }}
+{% endblock %}
+
+{% if object.header_image %}
+    {% block extra-javascript %}
+        <script>$(".hero-image").backstretch("{{ object.header_image.url }}");</script>
+        <script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}"></script>
+    {% endblock %}
+{% endif %}
+
+{% block footer %}
+    {% include "blog/includes/post_footer.html" %}
+{% endblock footer %}

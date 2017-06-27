@@ -1,0 +1,11 @@
+{% extends "_layout_single_column.html" %}
+
+{% load custom_markdown %}
+
+{% block main_content %}
+    <div class="post">
+    <h1>{{ flatpage.title }}</h1>
+    {{ flatpage.content|custom_markdown }}
+    </div>
+
+{% endblock %}

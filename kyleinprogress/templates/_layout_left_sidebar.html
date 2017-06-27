@@ -1,0 +1,39 @@
+<!-- Load Base HTML Template -->
+{% extends "_base.html" %}
+
+{% load copyrighttags %}
+
+{% block content %}
+<main class="container left-container">
+    <div class="row">
+
+        <!-- Navigation Menu -->
+        {% include "includes/navigation.html" %}
+
+        <!-- Begin Sidebar -->
+        <section class="sidebar col-md-5 col-sm-12" style="background-image: url(/static/img/wing-picture.jpg)">
+
+            <span class="menu-trigger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </span>
+
+            <div class="site-info">
+                <div class="primary-info">
+                    <h1>KyleInProgress</h1>
+                    <p>A place for me to subject the world to my random and idle thoughts. Enjoy!</p>
+                </div>
+                <div class="secondary-info">
+                    <p>Copyright &copy; {% getCopyrightYears %} | Kyle Warner | All Rights Reserved</a></p>
+                </div>
+            </div>
+        </section><!-- End Sidebar -->
+
+        <section class="col-md-7 col-sm-12 col-md-offset-5 main-content">
+            {% block main_content %}{% endblock %}
+        </section><!-- main content -->
+
+    </div>
+</main>
+{% endblock content %}

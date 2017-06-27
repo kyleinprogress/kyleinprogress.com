@@ -1,0 +1,21 @@
+{% load custom_markdown %}
+{% load static from staticfiles %}
+
+{% for post in object_list %}
+<article class="post {% if not post.is_published %}unpublished{% endif %}">
+    <div class="post-preview col-xs-12 no-gutter">
+        <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+        {% if post.summary %}
+            {{ post.summary|custom_markdown }}
+        {% endif %}
+        <p class="meta"><i class="fa fa-bookmark"></i> {{ post.published_date|date:"DATE_FORMAT" }}</p>
+    </div>
+</article>
+{% empty %}
+<article>
+    <div class="post-preview col-xs-12 no-gutter">
+        <br /><p>Unfortunately, we could not find any posts matching the category.</p>
+    </div>
+</article>
+
+{% endfor %}
