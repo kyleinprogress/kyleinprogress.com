@@ -1,6 +1,5 @@
 # Ingnore Folders
 .idea
-.DS_Store
 __pycache__
 env/
 reports/
@@ -10,6 +9,7 @@ kyleinprogress/media/
 # Ignore Files
 *.codekit3
 *.pyc
+.DS_Store
 config.json
 db.sqlite3
 kyleinprogress/static/css/*.css
