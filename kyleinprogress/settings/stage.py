@@ -1,4 +1,4 @@
- settings/dev.py
+# settings/dev.py
 
 from .common import *
 
@@ -7,15 +7,6 @@ ALLOWED_HOSTS = [
 ]
 
 DEBUG = True
-
-# Jenkins Test Coverage
-THIRD_PARTY_APPS.append('django_jenkins')
-
-JENKINS_TASKS = [
-    'django_jenkins.tasks.run_pylint',
-]
-
-PROJECT_APPS = ['blog']
 
 # Database Connection
 DATABASES = {
@@ -27,3 +18,5 @@ DATABASES = {
         'HOST': SECRETS.get('db_host', ''),
     }
 }
+
+STATIC_ROOT = os.path.dirname(BASE_DIR) + '/public/static/'
