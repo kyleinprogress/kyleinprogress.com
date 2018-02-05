@@ -1,10 +1,10 @@
+# Contains requirements common to all environments
 Django
 django-copyright
 django-debug-toolbar
 django-el-pagination
-django-jenkins
 markdown2
 Pillow
-#mysqlclient
 Pygments
 sqlparse
+feedparser

@@ -3,8 +3,8 @@
 from .common import *
 
 ALLOWED_HOSTS = [
-    'www.kyleinprogress.dev',
-    'kyleinprogress.dev',
+    'www.kyleinprogress.local',
+    'kyleinprogress.local',
 ]
 
 DEBUG = True
@@ -34,6 +34,6 @@ INSTALLED_APPS.append('debug_toolbar')
 
 INTERNAL_IPS = ['127.0.0.1', '192.168.10.1', '10.0.2.2']
 
-MIDDLEWARE_CLASSES.insert(
-    MIDDLEWARE_CLASSES.index('django.middleware.common.CommonMiddleware') + 1,
+MIDDLEWARE.insert(
+    MIDDLEWARE.index('django.middleware.common.CommonMiddleware') + 1,
     'debug_toolbar.middleware.DebugToolbarMiddleware')

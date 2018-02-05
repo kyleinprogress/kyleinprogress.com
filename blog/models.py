@@ -72,7 +72,7 @@ class Image(models.Model):
 
 # -- Posts --
 class Post(models.Model):
-    author = models.ForeignKey('auth.User')
+    author = models.ForeignKey('auth.User', on_delete=models.PROTECT,)
     title = models.CharField(max_length=200)
     summary = models.TextField(blank=True, null=True)
     text = models.TextField(
@@ -100,8 +100,8 @@ class Post(models.Model):
         null=True
     )
     slug = models.SlugField(max_length=200, unique=True)
-    site = models.ForeignKey('sites.Site')
-    category = models.ForeignKey(Category)
+    site = models.ForeignKey('sites.Site', on_delete=models.PROTECT,)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT,)
     header_image = models.ImageField(upload_to='%Y/%m/%d')
     images = models.ManyToManyField(Image, blank=True)
 
