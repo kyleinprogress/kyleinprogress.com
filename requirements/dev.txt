@@ -1,5 +1,6 @@
 # Specifies only dev-specific requirements
 # But imports the common ones too
 -r common.txt
-django-jenkins
+#django-jenkins
+coverage
 factory_boy

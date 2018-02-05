@@ -40,11 +40,11 @@ class Category(models.Model):
     slug = models.SlugField(max_length=40, unique=True)
     accent_image = models.ImageField(upload_to='categories')
 
-    def get_absolute_url(self):
-        return "/category/%s/" % (self.slug)
-
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return "/category/%s/" % (self.slug)
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -63,8 +63,8 @@ class Image(models.Model):
 
     def image_thumbnail(self):
         return u'<img src="%s" width=250 />' % (self.image.url)
-    image_thumbnail.short_description = 'Thumbnail'
-    image_thumbnail.allow_tags = True
+        image_thumbnail.short_description = 'Thumbnail'
+        image_thumbnail.allow_tags = True
 
     class Meta:
         ordering = ["-upload_date"]
@@ -72,7 +72,7 @@ class Image(models.Model):
 
 # -- Posts --
 class Post(models.Model):
-    author = models.ForeignKey('auth.User', on_delete=models.PROTECT,)
+    author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     summary = models.TextField(blank=True, null=True)
     text = models.TextField(
@@ -100,8 +100,8 @@ class Post(models.Model):
         null=True
     )
     slug = models.SlugField(max_length=200, unique=True)
-    site = models.ForeignKey('sites.Site', on_delete=models.PROTECT,)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT,)
+    site = models.ForeignKey('sites.Site')
+    category = models.ForeignKey(Category)
     header_image = models.ImageField(upload_to='%Y/%m/%d')
     images = models.ManyToManyField(Image, blank=True)
 

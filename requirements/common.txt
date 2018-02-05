@@ -1,5 +1,5 @@
 # Contains requirements common to all environments
-Django
+Django==1.*
 django-copyright
 django-debug-toolbar
 django-el-pagination

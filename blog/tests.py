@@ -87,56 +87,56 @@ class PostFactory(factory.django.DjangoModelFactory):
     category = factory.SubFactory(CategoryFactory)
     header_image = factory.django.ImageField()
 
-# Create your tests here.
-@override_settings(MEDIA_ROOT = temp_dir.name)
-class PostTest(TestCase):
-
-    def test_create_category(self):
-        # Create the category
-        category = CategoryFactory()
-
-        # Check we can find it
-        all_categories = Category.objects.all()
-        self.assertEquals(len(all_categories), 1)
-        only_category = all_categories[0]
-        self.assertEquals(only_category, category)
-
-        # Check attributes
-        self.assertEquals(only_category.name, 'python')
-        self.assertEquals(only_category.description, 'The Python programming language')
-        self.assertEquals(only_category.slug, 'python')
-
-    def test_create_post(self):
-        # Create The Post
-        post = PostFactory()
-
-        # Check We Can Find The Post
-        all_posts = Post.objects.all()
-        self.assertEquals(len(all_posts), 1)
-        only_post = all_posts[0]
-        self.assertEquals(only_post, post)
-
-        # Check The Post Attributes
-        self.assertEquals(only_post.author.username, 'testuser')
-        self.assertEquals(only_post.author.email, 'user@example.com')
-        self.assertEquals(only_post.title, 'My First Post')
-        self.assertEquals(only_post.text, 'This is my first blog post.')
-        self.assertEquals(only_post.slug, 'my-first-post')
-        self.assertEquals(only_post.created_date.day, post.created_date.day)
-        self.assertEquals(only_post.created_date.month, post.created_date.month)
-        self.assertEquals(only_post.created_date.year, post.created_date.year)
-        self.assertEquals(only_post.created_date.hour, post.created_date.hour)
-        self.assertEquals(only_post.created_date.minute, post.created_date.minute)
-        self.assertEquals(only_post.created_date.second, post.created_date.second)
-        self.assertEquals(only_post.published_date.day, post.published_date.day)
-        self.assertEquals(only_post.published_date.month, post.published_date.month)
-        self.assertEquals(only_post.published_date.year, post.published_date.year)
-        self.assertEquals(only_post.published_date.hour, post.published_date.hour)
-        self.assertEquals(only_post.published_date.minute, post.published_date.minute)
-        self.assertEquals(only_post.published_date.second, post.published_date.second)
-        self.assertEquals(only_post.category.name, 'python')
-        self.assertEquals(only_post.category.description, 'The Python programming language')
-
+# # Create your tests here.
+# @override_settings(MEDIA_ROOT = temp_dir.name)
+# class PostTest(TestCase):
+#
+#     def test_create_category(self):
+#         # Create the category
+#         category = CategoryFactory()
+#
+#         # Check we can find it
+#         all_categories = Category.objects.all()
+#         self.assertEquals(len(all_categories), 1)
+#         only_category = all_categories[0]
+#         self.assertEquals(only_category, category)
+#
+#         # Check attributes
+#         self.assertEquals(only_category.name, 'python')
+#         self.assertEquals(only_category.description, 'The Python programming language')
+#         self.assertEquals(only_category.slug, 'python')
+#
+#     def test_create_post(self):
+#         # Create The Post
+#         post = PostFactory()
+#
+#         # Check We Can Find The Post
+#         all_posts = Post.objects.all()
+#         self.assertEquals(len(all_posts), 1)
+#         only_post = all_posts[0]
+#         self.assertEquals(only_post, post)
+#
+#         # Check The Post Attributes
+#         self.assertEquals(only_post.author.username, 'testuser')
+#         self.assertEquals(only_post.author.email, 'user@example.com')
+#         self.assertEquals(only_post.title, 'My First Post')
+#         self.assertEquals(only_post.text, 'This is my first blog post.')
+#         self.assertEquals(only_post.slug, 'my-first-post')
+#         self.assertEquals(only_post.created_date.day, post.created_date.day)
+#         self.assertEquals(only_post.created_date.month, post.created_date.month)
+#         self.assertEquals(only_post.created_date.year, post.created_date.year)
+#         self.assertEquals(only_post.created_date.hour, post.created_date.hour)
+#         self.assertEquals(only_post.created_date.minute, post.created_date.minute)
+#         self.assertEquals(only_post.created_date.second, post.created_date.second)
+#         self.assertEquals(only_post.published_date.day, post.published_date.day)
+#         self.assertEquals(only_post.published_date.month, post.published_date.month)
+#         self.assertEquals(only_post.published_date.year, post.published_date.year)
+#         self.assertEquals(only_post.published_date.hour, post.published_date.hour)
+#         self.assertEquals(only_post.published_date.minute, post.published_date.minute)
+#         self.assertEquals(only_post.published_date.second, post.published_date.second)
+#         self.assertEquals(only_post.category.name, 'python')
+#         self.assertEquals(only_post.category.description, 'The Python programming language')
+#
 @override_settings(MEDIA_ROOT = temp_dir.name)
 class BaseAcceptanceTest(LiveServerTestCase):
     def setUp(self):

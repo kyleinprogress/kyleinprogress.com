@@ -2,15 +2,15 @@
 .idea
 __pycache__
 env/
-reports/
-node_modules/
+htmlcov/
 kyleinprogress/media/
 
 # Ignore Files
 *.codekit3
 *.pyc
+*.sqlite3
+.coverage
 .DS_Store
 config.json
-db.sqlite3
 kyleinprogress/static/css/*.css
 kyleinprogress/static/css/*.map
