@@ -3,8 +3,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-2">
             <div class="category-list">
-                <p>Published <span>{{ object.published_date|date:"l, F jS, Y" }}</span></p>
-                <p>{{ object.author.get_full_name }} in <a href="{{ object.category.get_absolute_url }}">{{ object.category.name }}</a></p>
+                <p>Published <span>{{ object.published_date|date:"l, F jS, Y" }}</span> in <a href="{{ object.category.get_absolute_url }}">{{ object.category.name }}</a></p>
 
                 {% if post.tags.all %}
                 <div class="other-catergories">

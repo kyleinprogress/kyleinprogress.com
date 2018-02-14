@@ -126,6 +126,9 @@ class Post(models.Model):
     def textWithImageLinks(self):
         return insertImageRefLinks(self.text, self.images.all())
 
+    def getAllPostYears(self):
+        return self.dates('pub_date', 'year')
+
     class Meta:
         ordering = ["-published_date"]
         verbose_name_plural = 'posts'

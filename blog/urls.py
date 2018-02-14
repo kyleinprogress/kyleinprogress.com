@@ -2,11 +2,10 @@ from django.conf.urls import include, url
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import ListView, DetailView, ArchiveIndexView
 
+from blog.feeds import LatestPosts
 from blog.models import Post, Category
 from blog.sitemap import PostSitemap, FlatpageSitemap
-from blog.views import PostAllView, PostYearArchiveView, PostMonthArchiveView, CategoryListView
-
-from . import views, feeds
+from blog.views import Index, PostAllView, PostYearArchiveView, PostMonthArchiveView, CategoryListView
 
 # Define sitemaps
 sitemaps = {
@@ -16,7 +15,7 @@ sitemaps = {
 
 urlpatterns = [
     # Index
-    url(r'^$', views.index, name="index"),
+    url(r'^$', Index, name="index"),
 
     # Individual posts
     url(r'^archives/(?P<published_date__year>\d{4})/(?P<published_date__month>\d{2})/(?P<slug>[a-zA-Z0-9-]+)/?$', DetailView.as_view(model=Post,)),
@@ -33,7 +32,7 @@ urlpatterns = [
     url(r'^category/(?P<slug>[a-zA-Z0-9-]+)/?$', CategoryListView.as_view(model=Category,paginate_by=10,)),
 
     # Post RSS feed
-    url(r'^feed/$', feeds.LatestPosts()),
+    url(r'^feed/$', LatestPosts()),
 
     # Sitemap
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},

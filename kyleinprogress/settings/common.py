@@ -100,7 +100,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [str(PROJECT_PACKAGE.joinpath('static'))]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = str(BASE_DIR.joinpath('m'))
+MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 
 
 # Django Copyright

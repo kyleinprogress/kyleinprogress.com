@@ -8,7 +8,7 @@ from django.views.generic import DetailView, ListView, ArchiveIndexView, YearArc
 from .models import Category, Post
 import markdown2
 
-def index(request):
+def Index(request):
     if request.user.is_staff:
         post_list = Post.objects.all().order_by('-published_date')
     else:
